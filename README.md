@@ -8,3 +8,6 @@ Install for use in your Javascript based app:
 npm install https://git.mobile.dl.net/tools/datalogic-cordova-sdk
 ```
 
+## Credits
+* https://cordova.apache.org/docs/en/latest/guide/hybrid/plugins/
+* https://github.com/don/cordova-plugin-hello
