@@ -1,11 +1,13 @@
 # Datalogic Cordova SDK
 Library that exposes the Datalogic Android SDK (Java) as a Cordova plug-in.
 
-## Install
-Install for use in your Javascript based app:
+## Using
+
+Install the plugin 
 
 ```bash
-npm install https://git.mobile.dl.net/tools/datalogic-cordova-sdk
+npm config set strict-ssl false
+cordova plugin add git+https://git.mobile.dl.net/tools/datalogic-cordova-sdk.git
 ```
 
 ## Credits
