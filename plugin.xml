@@ -23,7 +23,7 @@
       </feature>
     </config-file>
 
-    <source-file src="src/com/datalogic/cordova/decode/Hello.java" target-dir="src/com/datalogic/cordova/decode/"/>
+    <source-file src="src/android/Hello.java" target-dir="src/com/datalogic/cordova/decode"/>
   </platform>
 
 </plugin>
