@@ -1,16 +1,16 @@
 {
-    "name": "datalogic-cordova-sdk",
+    "name": "cordova-plugin-datalogic",
     "version": "0.1.0",
     "description": "Datalogic Cordova SDK for Android devices",
     "cordova": {
-        "id": "datalogic-cordova-sdk",
+        "id": "cordova-plugin-datalogic",
         "platforms": [
             "android"
         ]
     },
     "repository": {
         "type": "git",
-        "url": "git+https://git.mobile.dl.net/tools/datalogic-cordova-sdk.git"
+        "url": "git+https://git.mobile.dl.net/tools/cordova-plugin-datalogic.git"
     },
     "keywords": [
         "cordova",
@@ -21,8 +21,5 @@
     ],
     "author": "Datalogic",
     "license": "Apache-2",
-    "bugs": {
-        "url": "https://google.com"
-    },
-    "homepage": "https://datalogic.github.io/cordova-sdk"
+    "homepage": "https://github.com/datalogic/cordova-plugin-datalogic"
 }

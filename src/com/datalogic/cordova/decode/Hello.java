@@ -1,4 +1,4 @@
-package com.datalogic.decode;
+package com.datalogic.cordova.decode;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;

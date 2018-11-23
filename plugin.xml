@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="com.datalogic"
-        version="0.7.0">
+        id="cordova-plugin-datalogic"
+        version="0.1.0">
 
-  <name>Datalogic Cordova SDK</name>
+  <name>Datalogic Cordova Plugin</name>
 
   <engines>
     <engine name="cordova" version=">=3.4.0"/>
@@ -19,11 +19,11 @@
 
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="Hello">
-        <param name="android-package" value="com.datalogic.decode.Hello"/>
+        <param name="android-package" value="com.datalogic.cordova.decode.Hello"/>
       </feature>
     </config-file>
 
-    <source-file src="src/com/datalogic/decode/Hello.java" target-dir="src/com/datalogic/decode/"/>
+    <source-file src="src/com/datalogic/cordova/decode/Hello.java" target-dir="src/com/datalogic/cordova/decode/"/>
   </platform>
 
 </plugin>
