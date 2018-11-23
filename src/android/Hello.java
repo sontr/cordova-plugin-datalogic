@@ -3,6 +3,7 @@ package com.datalogic.cordova.decode;
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
+import com.datalogic.decode.PropertyID;
 
 public class Hello extends CordovaPlugin {
 
@@ -12,8 +13,9 @@ public class Hello extends CordovaPlugin {
         if (action.equals("greet")) {
 
             String name = data.getString(0);
-            String message = "Hello, " + name;
-            callbackContext.success(message);
+            //String message = "Hello, " + name;
+            String message = Integer.toString(PropertyID.AIM_ENABLE);
+	    callbackContext.success(message);
 
             return true;
 

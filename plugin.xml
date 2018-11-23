@@ -23,7 +23,16 @@
       </feature>
     </config-file>
 
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <uses-library
+            android:name="com.datalogic.device"
+	    android:required="true" />
+    </config-file>
+
     <source-file src="src/android/Hello.java" target-dir="src/com/datalogic/cordova/decode"/>
+    <!-- framework src="com.github.datalogic:datalogic-android-sdk:1.12"/ -->
+    <!-- framework src="com.mixpanel.android:mixpanel-android:5.4.1"/ -->
+    <framework src="build.gradle" custom="true" type="gradleReference" />
   </platform>
 
 </plugin>
