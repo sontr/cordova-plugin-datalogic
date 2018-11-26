@@ -20,6 +20,7 @@
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="Hello">
         <param name="android-package" value="com.datalogic.cordova.decode.Hello"/>
+        <param name="onload" value="true" />
       </feature>
     </config-file>
 
