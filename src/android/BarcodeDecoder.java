@@ -14,12 +14,13 @@ import com.datalogic.device.ErrorManager;
 import android.util.Log;
 
 
-public class Hello extends CordovaPlugin {
+public class BarcodeDecoder extends CordovaPlugin {
 
     private final String LOGTAG = getClass().getName();
     BarcodeManager decoder = null;
     ReadListener listener = null;
-    static String result = null;
+    String barcodeData = null;
+    CallbackContext callbackContext = null;
     boolean multiTasking=true;
 
     @Override
@@ -29,21 +30,15 @@ public class Hello extends CordovaPlugin {
     }
 
     @Override
-    public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, JSONArray data, CallbackContext context) throws JSONException {
 
-        if (action.equals("greet")) {
-
-            String name = data.getString(0);
-            //String message = "Hello, " + name;
-            String message = Integer.toString(PropertyID.AIM_ENABLE) + " " + LOGTAG;
-            if(result == null){
-                callbackContext.success(message);    
-            }
-            else{
-                callbackContext.success(result);
-            }
-	        
-
+        if (action.equals("receive-barcode-data")) {
+            callbackContext = context;
+            // PluginResult result = new PluginResult(PluginResult.Status.OK, message);
+            // result.setKeepCallback(true);
+            // if(barcodeData == null){
+            //     callbackContext.sendPluginResult(result);    
+            // }
             return true;
 
         } else {
@@ -75,7 +70,12 @@ public class Hello extends CordovaPlugin {
                 @Override
                 public void onRead(DecodeResult decodeResult) {
                     // Change the result to the current received result.
-                    result = decodeResult.getText();
+                    barcodeData = decodeResult.getText();
+                    if(callbackContext != null){
+                        PluginResult result = new PluginResult(PluginResult.Status.OK, barcodeData);
+                        result.setKeepCallback(true);
+                        callbackContext.sendPluginResult(result);
+                    }
                 }
 
             };
@@ -102,6 +102,10 @@ public class Hello extends CordovaPlugin {
 
                 // Let the garbage collector take care of our reference.
                 decoder = null;
+
+                //gc callbackContext
+                callbackContext = null;
+
             } catch (Exception e) {
                 Log.e(LOGTAG, "Error while trying to remove a listener from BarcodeManager", e);
             }
@@ -126,7 +130,7 @@ public class Hello extends CordovaPlugin {
                 @Override
                 public void onRead(DecodeResult decodeResult) {
                     // Change the displayed text to the current received result.
-                    result = decodeResult.getText();
+                    barcodeData = decodeResult.getText();
                 }
 
             };
