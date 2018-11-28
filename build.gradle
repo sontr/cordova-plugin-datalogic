@@ -19,4 +19,5 @@ allprojects {
 
 dependencies {
     implementation 'com.github.datalogic:datalogic-android-sdk:1.12'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
