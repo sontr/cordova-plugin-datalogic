@@ -13,7 +13,7 @@
         "url": "git+https://git.mobile.dl.net/tools/cordova-plugin-datalogic.git"
     },
     "publishConfig": {
-    	"access": "public"
+        "access": "public"
     },
     "keywords": [
         "cordova",
