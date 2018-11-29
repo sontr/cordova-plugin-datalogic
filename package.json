@@ -1,5 +1,5 @@
 {
-    "name": "cordova-plugin-datalogic",
+    "name": "@datalogic/cordova-plugin-datalogic",
     "version": "0.1.0",
     "description": "Datalogic Cordova SDK for Android devices",
     "cordova": {
