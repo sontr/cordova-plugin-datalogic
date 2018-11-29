@@ -9,25 +9,17 @@
     <engine name="cordova" version=">=3.4.0"/>
   </engines>
 
-  <asset src="www/barcodeDecoder.js" target="js/barcodeDecoder.js"/>
-  <asset src="www/test.js" target="js/test.js"/>
+  <asset src="www/barcodeManager.js" target="js/barcodeManager.js"/>
 
-  <js-module src="www/barcodeDecoder.js" name="barcodeDecoder">
-    <clobbers target="barcodeDecoder" />
-  </js-module>
-  <js-module src="www/test.js" name="test">
-    <clobbers target="test" />
+  <js-module src="www/barcodeManager.js" name="barcodeManager">
+    <clobbers target="barcodeManager" />
   </js-module>
 
   <platform name="android">
 
     <config-file target="res/xml/config.xml" parent="/*">
-      <feature name="BarcodeDecoder">
-        <param name="android-package" value="com.datalogic.cordova.decode.BarcodeDecoder"/>
-        <param name="onload" value="true" />
-      </feature>
-      <feature name="Test">
-        <param name="android-package" value="com.datalogic.cordova.test.Test"/>
+      <feature name="BarcodeManager">
+        <param name="android-package" value="com.datalogic.cordova.decode.BarcodeManager"/>
         <param name="onload" value="true" />
       </feature>
     </config-file>
@@ -38,8 +30,7 @@
 	    android:required="true" />
     </config-file>
 
-    <source-file src="src/android/BarcodeDecoder.java" target-dir="src/com/datalogic/cordova/decode"/>
-    <source-file src="src/android/Test.java" target-dir="src/com/datalogic/cordova/test"/> 
+    <source-file src="src/android/BarcodeManager.java" target-dir="src/com/datalogic/cordova/decode"/>
     <!-- framework src="com.github.datalogic:datalogic-android-sdk:1.12"/ -->
     <!-- framework src="com.mixpanel.android:mixpanel-android:5.4.1"/ -->
     <framework src="build.gradle" custom="true" type="gradleReference" />

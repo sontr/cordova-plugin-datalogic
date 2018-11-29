@@ -3,23 +3,25 @@ package com.datalogic.cordova.decode;
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import com.datalogic.decode.PropertyID;
 
-import com.datalogic.decode.BarcodeManager;
+//import com.datalogic.decode.BarcodeManager;
 import com.datalogic.decode.DecodeException;
 import com.datalogic.decode.DecodeResult;
 import com.datalogic.decode.ReadListener;
 import com.datalogic.device.ErrorManager;
+import com.datalogic.decode.BarcodeID;
 
 import android.util.Log;
+import android.os.Bundle;
 
 
-public class BarcodeDecoder extends CordovaPlugin {
+public class BarcodeManager extends CordovaPlugin {
 
     private final String LOGTAG = getClass().getName();
-    BarcodeManager decoder = null;
+    com.datalogic.decode.BarcodeManager decoder = null;
     ReadListener listener = null;
-    String barcodeData = null;
     CallbackContext callbackContext = null;
     boolean multiTasking=true;
 
@@ -32,7 +34,7 @@ public class BarcodeDecoder extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext context) throws JSONException {
 
-        if (action.equals("receive-barcode-data")) {
+        if (action.equals("addReadListner")) {
             callbackContext = context;
             // PluginResult result = new PluginResult(PluginResult.Status.OK, message);
             // result.setKeepCallback(true);
@@ -49,13 +51,24 @@ public class BarcodeDecoder extends CordovaPlugin {
     }
 
     @Override
+    public Bundle onSaveInstanceState(){
+        Bundle state = new Bundle();
+        return state;
+    }
+
+    @Override
+    public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext){
+        this.callbackContext = callbackContext;
+    }
+
+    @Override
     public void onResume(boolean multiTasking){
         super.onResume(multiTasking);
         Log.i(LOGTAG, "onResume");
 
         // If the decoder instance is null, create it.
         if (decoder == null) { // Remember an onPause call will set it to null.
-            decoder = new BarcodeManager();
+            decoder = new com.datalogic.decode.BarcodeManager();
         }
 
         // From here on, we want to be notified with exceptions in case of errors.
@@ -70,12 +83,21 @@ public class BarcodeDecoder extends CordovaPlugin {
                 @Override
                 public void onRead(DecodeResult decodeResult) {
                     // Change the result to the current received result.
-                    barcodeData = decodeResult.getText();
-                    if(callbackContext != null){
-                        PluginResult result = new PluginResult(PluginResult.Status.OK, barcodeData);
-                        result.setKeepCallback(true);
-                        callbackContext.sendPluginResult(result);
+                    try{
+                        JSONObject barcodeObject = new JSONObject();
+                        barcodeObject.put("barcodeData", decodeResult.getText());
+                        barcodeObject.put("barcodeType", decodeResult.getBarcodeID());
+
+                        if(callbackContext != null){
+                            PluginResult result = new PluginResult(PluginResult.Status.OK, barcodeObject.toString());
+                            result.setKeepCallback(true);
+                            callbackContext.sendPluginResult(result);
+                        }
                     }
+                    catch(Exception e){
+                        Log.e(LOGTAG, "Error while trying to read barcode data", e);
+                    }
+                    
                 }
 
             };
@@ -103,43 +125,13 @@ public class BarcodeDecoder extends CordovaPlugin {
                 // Let the garbage collector take care of our reference.
                 decoder = null;
 
-                //gc callbackContext
-                callbackContext = null;
-
             } catch (Exception e) {
                 Log.e(LOGTAG, "Error while trying to remove a listener from BarcodeManager", e);
             }
         }
     }
 
-    private void initializeDecoder(){
-        // If the decoder instance is null, create it.
-        if (decoder == null) { // Remember an onPause call will set it to null.
-            decoder = new BarcodeManager();
-        }
 
-        // From here on, we want to be notified with exceptions in case of errors.
-        ErrorManager.enableExceptions(true);
 
-        try {
-
-            // Create an anonymous class.
-            listener = new ReadListener() {
-
-                // Implement the callback method.
-                @Override
-                public void onRead(DecodeResult decodeResult) {
-                    // Change the displayed text to the current received result.
-                    barcodeData = decodeResult.getText();
-                }
-
-            };
-
-            // Remember to add it, as a listener.
-            decoder.addReadListener(listener);
-
-        } catch (DecodeException e) {
-            Log.e(LOGTAG, "Error while trying to bind a listener to BarcodeManager", e);
-        }
-    }
+    
 }
