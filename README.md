@@ -1,3 +1,3 @@
-# Datalogic Cordova SDK
-Library that exposes the Datalogic Android SDK (Java) as a Cordova plug-in.
+# Datalogic Cordova Plugin
+Plugin that exposes the Datalogic Android SDK (Java) as a Cordova plug-in.
 
