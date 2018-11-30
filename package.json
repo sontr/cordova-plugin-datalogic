@@ -10,7 +10,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://git.mobile.dl.net/tools/cordova-plugin-datalogic.git"
+        "url": "https://github.com/datalogic/cordova-plugin-datalogic"
     },
     "publishConfig": {
         "access": "public"
