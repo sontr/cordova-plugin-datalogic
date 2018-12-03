@@ -28,18 +28,40 @@ Several Ionic sample applications are provided to demonstrate using the plugin. 
 
 ## API Reference
 
-### barcodeManager.addReadListener(`successCallback`, `errorCallback`)
+### barcodeManager.addReadListener(`successCallback`, `errorCallback`): Object
 
-Registers a callback function to be notified when a read event is triggered.
+#### Description
 
-Example:
+Registers a callback function (`successCallback`) to be notified when a read event is triggered. This function will be called ***every*** time a barcode is successfully scanned. Therefore, you will typically only need to call `barcodeManager.addReadListener()` *once* in your application.
+
+#### Parameters
+
+* ***successCallback*** - function be to called when barcode data is received.
+
+* ***errorCallback*** - function to be called if an error occurs
+
+#### Response
+
+The object returned contains the barcode data and type. For example:
+
+```json
+{
+   "barcodeData": "EUG2997",
+   "barcodeType": "CODE128"
+}
+```
+
+The `barcodeType` string will be one of the `BarcodeID` values defined in the [BarcodeID class](https://github.com/datalogic/datalogic-android-sdk/blob/master/sdk/src/main/java/com/datalogic/decode/BarcodeID.java) in the [Datalogic Android SDK](https://github.com/datalogic/datalogic-android-sdk).
+
+#### Example Usage
 
 ```js
 declare let barcodeManager : any;
 ...
 barcodeManager.addReadListner(
    (data) => {
-    alert(data);
+     parsedData = JSON.parse(data);
+     alert(parsedData.barcodeData + ", " + parsedData.barcodeType);
    },
    (err)=>{
      alert(err);
