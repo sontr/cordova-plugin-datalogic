@@ -16,7 +16,7 @@ npm i @datalogic/cordova-plugin-datalogic
 cordova plugin add @datalogic/cordova-plugin-datalogic
 ```
 
-***or, if*** you are using ionic, this ionic command:
+***or,*** if you are using ionic, this ionic command:
 
 ```bash
 ionic cordova plugin add @datalogic/cordova-plugin-datalogic
@@ -35,9 +35,11 @@ Registers a callback function to be notified when a read event is triggered.
 Example:
 
 ```js
+declare let barcodeManager : any;
+...
 barcodeManager.addReadListner(
    (data) => {
-    this.events.publish('data:received', JSON.parse(data));
+    alert(data);
    },
    (err)=>{
      alert(err);
@@ -45,10 +47,3 @@ barcodeManager.addReadListner(
 );
 ```
 
-and then `data:received` event can be handled like so:
-
-```js
-events.subscribe('data:received', (data) => {
-   // use data.barcode and data.barcodeType
-});
-```
