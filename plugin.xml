@@ -19,6 +19,11 @@
     <clobbers target="scannerProperties" />
   </js-module>
 
+  <asset src="www/keyboardManager.js" target="js/keyboardManager.js"/>
+  <js-module src="www/keyboardManager.js" name="keyboardManager">
+    <clobbers target="keyboardManager" />
+  </js-module>
+
   <platform name="android">
 
     <config-file target="res/xml/config.xml" parent="/*">
@@ -33,6 +38,11 @@
         <param name="onload" value="false" />
       </feature>
 
+      <feature name="KeyboardManager">
+        <param name="android-package" value="com.datalogic.cordova.device.input.KeyboardManager"/>
+        <param name="onload" value="false" />
+      </feature>
+
     </config-file>
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -40,7 +50,9 @@
     </config-file>
 
     <source-file src="src/android/BarcodeManager.java" target-dir="src/com/datalogic/cordova/decode"/>
-    <source-file src="src/android/ScannerProperties.java" target-dir="src/com/datalogic/cordova/decode/configuration"/> 
+    <source-file src="src/android/ScannerProperties.java" target-dir="src/com/datalogic/cordova/decode/configuration"/>
+    <source-file src="src/android/KeyboardManager.java" target-dir="src/com/datalogic/cordova/device/input"/> 
+    <source-file src="src/android/Trigger.java" target-dir="src/com/datalogic/cordova/device/input"/> 
 
     <framework src="build.gradle" custom="true" type="gradleReference" />
   </platform>
