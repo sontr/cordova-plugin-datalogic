@@ -86,7 +86,7 @@ public class BarcodeManager extends CordovaPlugin {
                     try{
                         JSONObject barcodeObject = new JSONObject();
                         barcodeObject.put("barcodeData", decodeResult.getText());
-                        barcodeObject.put("barcodeType", decodeResult.getBarcodeID());
+                        barcodeObject.put("barcodeType", decodeResult.getBarcodeID().name());
 
                         if(callbackContext != null){
                             PluginResult result = new PluginResult(PluginResult.Status.OK, barcodeObject.toString());
