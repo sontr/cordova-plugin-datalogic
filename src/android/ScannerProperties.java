@@ -43,46 +43,91 @@ public class ScannerProperties extends CordovaPlugin{
 
     private final String LOGTAG = "CODY";
 
-    void propSetEnable(PropertyGroup pg, BooleanProperty en, JSONObject all, String key)
-    {
-        if (pg.isSupported())
-        {
-            try {
-                en.set(all.getJSONObject(key).getBoolean("enable"));
-            }
-            catch (JSONException e) { }
-        }
-    }
-
 	@Override
-    public boolean execute(String action, JSONArray data, CallbackContext context) throws JSONException {
-        
+    public boolean execute(String action, JSONArray data, CallbackContext context) throws JSONException 
+    {  
         if (action.equals("edit")) {
             
-            return execute_edit_manual(context);
-
-            //return execute_edit(context);
+            return edit(context);
 
         } else if (action.equals("store")) {
 
-            BarcodeManager manager = new BarcodeManager();    
-            com.datalogic.decode.configuration.ScannerProperties cfg = 
-                com.datalogic.decode.configuration.ScannerProperties.edit(manager);
+            return store(data, context);
 
-            // data should look something like this:
-            //[{"aztec":{"characterSetMode":"WINDOWS_1252","Length1":1,"Length2":3750,"lengthMode":"RANGE","enable":false,"userID":"d"},"codabar":{"convertToCLSI":false,
-            //Log.d(LOGTAG, "data: " + data.toString());
+        } else {
+            return false;
 
-            //Log.d(LOGTAG, "aztec.isSupported: " + cfg.aztec.isSupported() + ", .isFullySupported: " + cfg.aztec.isFullySupported());
-            //Log.d(LOGTAG, "digimarc.isSupported: " + cfg.digimarc.isSupported() + ", .isFullySupported: " + cfg.digimarc.isFullySupported());
+        }
+    }
 
-            JSONObject all = data.getJSONObject(0);
-            Log.d(LOGTAG, "all: " + all.toString());
+    boolean edit(CallbackContext context)
+    {
+        BarcodeManager manager = new BarcodeManager();    
+        com.datalogic.decode.configuration.ScannerProperties sp = 
+            com.datalogic.decode.configuration.ScannerProperties.edit(manager);
 
-            //String aztecStr = all.getString("aztec");
-            //Log.d(LOGTAG, "aztec: " + aztecStr);
-            
-            // TODO - pass ProprertyGroup instead. in propSetEnable, verify isSupported() first.
+        JSONObject cfg = new JSONObject();
+
+        try 
+        {
+            cfg.put("aztec", (new JSONObject()).put("enable", sp.aztec.enable.get()).put("supported", sp.aztec.isSupported()));
+            cfg.put("codabar", (new JSONObject()).put("enable", sp.codabar.enable.get()).put("supported", sp.codabar.isSupported()));
+            cfg.put("code128", (new JSONObject()).put("enable", sp.code128.enable.get()).put("supported", sp.code128.isSupported()));
+            cfg.put("code39", (new JSONObject()).put("enable", sp.code39.enable.get()).put("supported", sp.code39.isSupported()));
+            cfg.put("code93", (new JSONObject()).put("enable", sp.code93.enable.get()).put("supported", sp.code93.isSupported()));
+            cfg.put("composite", (new JSONObject()).put("enable", sp.composite.enable.get()).put("supported", sp.composite.isSupported()));
+            cfg.put("datamatrix", (new JSONObject()).put("enable", sp.datamatrix.enable.get()).put("supported", sp.datamatrix.isSupported()));
+            cfg.put("digimarc", (new JSONObject()).put("enable", sp.digimarc.enable.get()).put("supported", sp.digimarc.isSupported()));
+            cfg.put("discrete25", (new JSONObject()).put("enable", sp.discrete25.enable.get()).put("supported", sp.discrete25.isSupported()));
+            // error on Memor 10: cfg.put("dotcode", (new JSONObject()).put("enable", sp.dotcode.enable.get()).put("supported", sp.dotcode.isSupported()));
+            cfg.put("ean13", (new JSONObject()).put("enable", sp.ean13.enable.get()).put("supported", sp.ean13.isSupported()));
+            cfg.put("ean8", (new JSONObject()).put("enable", sp.ean8.enable.get()).put("supported", sp.ean8.isSupported()));
+            cfg.put("gs1DataBar_14", (new JSONObject()).put("enable", sp.gs1DataBar_14.enable.get()).put("supported", sp.gs1DataBar_14.isSupported()));
+            cfg.put("gs1DataBar_Expanded", (new JSONObject()).put("enable", sp.gs1DataBar_Expanded.enable.get()).put("supported", sp.gs1DataBar_Expanded.isSupported()));
+            cfg.put("gs1DataBar_Limited", (new JSONObject()).put("enable", sp.gs1DataBar_Limited.enable.get()).put("supported", sp.gs1DataBar_Limited.isSupported()));
+            cfg.put("interleaved25", (new JSONObject()).put("enable", sp.interleaved25.enable.get()).put("supported", sp.interleaved25.isSupported()));
+            cfg.put("matrix25", (new JSONObject()).put("enable", sp.matrix25.enable.get()).put("supported", sp.matrix25.isSupported()));
+            cfg.put("maxicode", (new JSONObject()).put("enable", sp.maxicode.enable.get()).put("supported", sp.maxicode.isSupported()));
+            cfg.put("microQr", (new JSONObject()).put("enable", sp.microQr.enable.get()).put("supported", sp.microQr.isSupported()));
+            cfg.put("micropdf417", (new JSONObject()).put("enable", sp.micropdf417.enable.get()).put("supported", sp.micropdf417.isSupported()));
+            cfg.put("msi", (new JSONObject()).put("enable", sp.msi.enable.get()).put("supported", sp.msi.isSupported()));
+            cfg.put("p4State", (new JSONObject()).put("enable", sp.p4State.enable.get()).put("supported", sp.p4State.isSupported()));
+            cfg.put("pAus", (new JSONObject()).put("enable", sp.pAus.enable.get()).put("supported", sp.pAus.isSupported()));
+            cfg.put("pJap", (new JSONObject()).put("enable", sp.pJap.enable.get()).put("supported", sp.pJap.isSupported()));
+            cfg.put("pKix", (new JSONObject()).put("enable", sp.pKix.enable.get()).put("supported", sp.pKix.isSupported()));
+            cfg.put("pPlanet", (new JSONObject()).put("enable", sp.pPlanet.enable.get()).put("supported", sp.pPlanet.isSupported()));
+            cfg.put("pPostnet", (new JSONObject()).put("enable", sp.pPostnet.enable.get()).put("supported", sp.pPostnet.isSupported()));
+            cfg.put("pRM", (new JSONObject()).put("enable", sp.pRM.enable.get()).put("supported", sp.pRM.isSupported()));
+            cfg.put("pdf417", (new JSONObject()).put("enable", sp.pdf417.enable.get()).put("supported", sp.pdf417.isSupported()));
+            cfg.put("qrCode", (new JSONObject()).put("enable", sp.qrCode.enable.get()).put("supported", sp.qrCode.isSupported()));
+            cfg.put("upcA", (new JSONObject()).put("enable", sp.upcA.enable.get()).put("supported", sp.upcA.isSupported()));
+            cfg.put("upcE", (new JSONObject()).put("enable", sp.upcE.enable.get()).put("supported", sp.upcE.isSupported()));
+        }
+        catch (JSONException e) 
+        { 
+            context.error("could not build JSON response");
+            return false;
+        }
+
+        //Log.d(LOGTAG, "edit: " + cfg.toString());
+
+        context.success(cfg.toString());
+        return true;
+    }
+
+    boolean store(JSONArray data, CallbackContext context)
+    {
+        BarcodeManager manager = new BarcodeManager();    
+        com.datalogic.decode.configuration.ScannerProperties cfg = 
+            com.datalogic.decode.configuration.ScannerProperties.edit(manager);
+        
+        JSONObject all;
+        try 
+        {
+            all = data.getJSONObject(0);
+            //Log.d(LOGTAG, "store: " + all.toString());
+
+            // note: digimarc and dotcote are not supported on Memor 10
             propSetEnable(cfg.aztec, cfg.aztec.enable, all, "aztec");
             propSetEnable(cfg.codabar, cfg.codabar.enable, all, "codabar");
             propSetEnable(cfg.code128, cfg.code128.enable, all, "code128");
@@ -90,7 +135,9 @@ public class ScannerProperties extends CordovaPlugin{
             propSetEnable(cfg.code93, cfg.code93.enable, all, "code93");
             propSetEnable(cfg.composite, cfg.composite.enable, all, "composite");
             propSetEnable(cfg.datamatrix, cfg.datamatrix.enable, all, "datamatrix");
+            propSetEnable(cfg.digimarc, cfg.digimarc.enable, all, "digimarc");
             propSetEnable(cfg.discrete25, cfg.discrete25.enable, all, "discrete25");
+            //propSetEnable(cfg.dotcode, cfg.dotcode.enable, all, "dotcode");
             propSetEnable(cfg.ean13, cfg.ean13.enable, all, "ean13");
             propSetEnable(cfg.ean8, cfg.ean8.enable, all, "ean8");
             propSetEnable(cfg.gs1DataBar_14, cfg.gs1DataBar_14.enable, all, "gs1DataBar_14");
@@ -113,164 +160,42 @@ public class ScannerProperties extends CordovaPlugin{
             propSetEnable(cfg.qrCode, cfg.qrCode.enable, all, "qrCode");
             propSetEnable(cfg.upcA, cfg.upcA.enable, all, "upcA");
             propSetEnable(cfg.upcE, cfg.upcE.enable, all, "upcE");
-        
-            // not supported on Memor 10 - cfg.digimarc.enable.set(all.getJSONObject("digimarc").getBoolean("enable"));    
-            // not supported on Memor 10 - cfg.dotcode.enable.set(all.getJSONObject("dotcode").getBoolean("enable"));
-
-            // displayNotification
-            // dnotification
-            // format
-            // goodread
-            // intentWedge
-            // keyboardWedge
-            // linearQZ
-            // multiScan
-            // scannerOptions
-            // upcEanExtensions
-            // webWedge
-
-            // should return com.datalogic.device.configuration.ConfigException.SUCCESS
-            cfg.store(manager, true);
-
-            // is this necessary?
-            context.success("success");
-            return true;
-
-        } else {
+        }
+        catch (JSONException e)
+        {
+            context.error("could not parse received JSON " + e.getMessage());
             return false;
-
         }
-    }
 
-    // void jsonAddObjAndBoolean(JSONObject base, String objName, String key, boolean b)
-    // {
-    //     JSONObject obj = new JSONObject();
-    //     try {
-    //         obj.put(key, b);
-    //         base.put(objName, obj);
-    //     }
-    //     catch (JSONException e) {
+        // still need to handle these:
+        // displayNotification
+        // dnotification
+        // format
+        // goodread
+        // intentWedge
+        // keyboardWedge
+        // linearQZ
+        // multiScan
+        // scannerOptions
+        // upcEanExtensions
+        // webWedge
 
-    //     }
-    // }
-
-    boolean execute_edit_manual(CallbackContext context)
-    {
-        BarcodeManager manager = new BarcodeManager();    
-        com.datalogic.decode.configuration.ScannerProperties sp = 
-            com.datalogic.decode.configuration.ScannerProperties.edit(manager);
-
-        JSONObject cfg = new JSONObject();
-
-        // newObj =   ... newObj.addExtra()     
-        //jsonAddObjAndBoolean(cfg, "aztec", "enable", sp.aztec.enable.get());
-        //jsonAddObjAndBoolean(cfg, "codabar", "enable", sp.codabar.enable.get());
-
-        try {
-            cfg.put("aztec", (new JSONObject()).put("enable", sp.aztec.enable.get()));
-            cfg.put("codabar", (new JSONObject()).put("enable", sp.codabar.enable.get()));
-
+        int ret = cfg.store(manager, true);
+        if (ret != ConfigException.SUCCESS)
+        {
+            context.error("could not parse received JSON err " + ret);
+            return false;
         }
-        catch (JSONException e) { }
 
-        Log.d(LOGTAG, "execute_edit_manual: " + cfg.toString());
-
-        context.success(cfg.toString());
+        context.success("success");
         return true;
     }
 
-    boolean execute_edit(CallbackContext context)
+    void propSetEnable(PropertyGroup pg, BooleanProperty en, JSONObject all, String key) throws JSONException 
     {
-        BarcodeManager manager = new BarcodeManager();    
-        com.datalogic.decode.configuration.ScannerProperties configuration = 
-            com.datalogic.decode.configuration.ScannerProperties.edit(manager);
-
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(EnumProperty.class, new EnumPropertySerializer());
-        gsonBuilder.registerTypeAdapter(NumericProperty.class, new NumericPropertySerializer());
-        gsonBuilder.registerTypeAdapter(BooleanProperty.class, new BooleanPropertySerializer());
-        gsonBuilder.registerTypeAdapter(CharacterProperty.class, new CharacterPropertySerializer());
-        gsonBuilder.registerTypeAdapter(TextProperty.class, new TextPropertySerializer());
-
-        ExclusionStrategy strategy = new ExclusionStrategy() {
-            @Override
-            public boolean shouldSkipClass(Class<?> clazz) {
-                return false;
-            }
-
-            @Override
-            public boolean shouldSkipField(FieldAttributes field) {
-                if (field.getName().compareTo("_list") == 0)
-                    return true;
-                if (field.getName().compareTo("_groupList") == 0)
-                    return true;
-                else
-                    return false;
-            }
-        };
-
-        Gson gson = gsonBuilder
-                //.setPrettyPrinting()
-                .addSerializationExclusionStrategy(strategy)
-                .create();
-
-        String json = gson.toJson(configuration);
-
-        context.success(json);
-        return true;
-    }
-}
-
-class EnumPropertySerializer implements  JsonSerializer<EnumProperty> {
-    public JsonElement serialize(EnumProperty src, Type typeofSrc, JsonSerializationContext context) {
-        
-        return new JsonPrimitive(src.get().toString());
-        //JsonObject jsonObject = new JsonObject();
-        //jsonObject.addProperty("value", src.get().toString());
-        //return jsonObject;
-    }
-}
-
-class NumericPropertySerializer implements  JsonSerializer<NumericProperty> {
-    public JsonElement serialize(NumericProperty src, Type typeofSrc, JsonSerializationContext context) {
-
-        return new JsonPrimitive(src.get());
-        //JsonObject jsonObject = new JsonObject();
-        //jsonObject.addProperty("max", src.getMax());
-        //jsonObject.addProperty("min", src.getMin());
-        //jsonObject.addProperty("value", src.get());
-        //return jsonObject;
-    }
-}
-
-class BooleanPropertySerializer implements  JsonSerializer<BooleanProperty> {
-    public JsonElement serialize(BooleanProperty src, Type typeofSrc, JsonSerializationContext context) {
-
-        return new JsonPrimitive(src.get());
-        //JsonObject jsonObject = new JsonObject();
-        //jsonObject.add();
-        //jsonObject.addProperty("value", src.get());
-        //return jsonObject;
-    }
-}
-
-class CharacterPropertySerializer implements  JsonSerializer<CharacterProperty> {
-    public JsonElement serialize(CharacterProperty src, Type typeofSrc, JsonSerializationContext context) {
-
-        return new JsonPrimitive(src.get());
-        //JsonObject jsonObject = new JsonObject();
-        //jsonObject.addProperty("value", src.get());
-        //return jsonObject;
-    }
-}
-
-class TextPropertySerializer implements  JsonSerializer<TextProperty> {
-    public JsonElement serialize(TextProperty src, Type typeofSrc, JsonSerializationContext context) {
-
-        return new JsonPrimitive(src.get());
-        //JsonObject jsonObject = new JsonObject();
-        //jsonObject.addProperty("value", src.get());
-        //return jsonObject;
+        if (pg.isSupported())
+        {
+            en.set(all.getJSONObject(key).getBoolean("enable"));
+        }
     }
 }
