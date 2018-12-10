@@ -36,7 +36,7 @@ public class KeyboardManager extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView){
         super.initialize(cordova, webView);
         // From here on, we want to be notified with exceptions in case of errors.
-        ErrorManager.enableExceptions(true);
+        //ErrorManager.enableExceptions(true);
         // allTriggers = new HashMap<Integer, String>();
         // allTriggers.put(5, "TRIGGER_ID_MOTION");
         // allTriggers.put(4, "TRIGGER_ID_AUTOSCAN");
@@ -114,18 +114,20 @@ public class KeyboardManager extends CordovaPlugin {
     private boolean getAllAvailableTriggers(CallbackContext callbackContext, JSONObject triggers, Gson gson){
 
         try{
+            //JSONException - If there is no value for the index or if the value is not convertible to boolean.
             List<Trigger> triggersList = keyboardManager.getAvailableTriggers();
             
-            List<com.datalogic.cordova.device.input.Trigger> triggersObjArray = new ArrayList<com.datalogic.cordova.device.input.Trigger>();
+            JSONArray triggersObjArray = new JSONArray();
 
             for(Trigger t : triggersList){
                 com.datalogic.cordova.device.input.Trigger trigger = new com.datalogic.cordova.device.input.Trigger(t.getId(), t.getName(), t.isEnabled());
-                triggersObjArray.add(trigger);
+                triggersObjArray.put(new JSONObject(gson.toJson(trigger)));
             }
 
-            triggers.put("triggers", gson.toJson(triggersObjArray));
+            triggers.put("triggers", triggersObjArray);
 
             PluginResult result = new PluginResult(PluginResult.Status.OK, triggers.toString());
+            Log.d("AllAvailableTriggers", triggers.toString() );
             callbackContext.sendPluginResult(result);
         }
         catch (DeviceException e) {
