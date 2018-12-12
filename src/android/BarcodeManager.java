@@ -66,13 +66,13 @@ public class BarcodeManager extends CordovaPlugin {
         super.onResume(multiTasking);
         Log.i(LOGTAG, "onResume");
 
+        // From here on, we want to be notified with exceptions in case of errors.
+        ErrorManager.enableExceptions(true);
+
         // If the decoder instance is null, create it.
         if (decoder == null) { // Remember an onPause call will set it to null.
             decoder = new com.datalogic.decode.BarcodeManager();
         }
-
-        // From here on, we want to be notified with exceptions in case of errors.
-        ErrorManager.enableExceptions(true);
 
         try {
 

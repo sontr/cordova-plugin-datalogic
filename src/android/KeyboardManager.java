@@ -50,12 +50,13 @@ public class KeyboardManager extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
         try{
-            // If the decoder instance is null, create it.
-            if (keyboardManager == null) { // Remember an onPause call will set it to null.
-                keyboardManager = new com.datalogic.device.input.KeyboardManager();
-            }
             // From here on, we want to be notified with exceptions in case of errors.
             ErrorManager.enableExceptions(true);
+            // If the keyboardManager instance is null, create it.
+            if (keyboardManager == null) {
+                keyboardManager = new com.datalogic.device.input.KeyboardManager();
+            }
+            
         } 
         catch (Exception e) {
             Log.e(LOGTAG, "Error while initializing KeyboardManager", e);
