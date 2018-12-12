@@ -34,12 +34,12 @@ public class AutoScanTrigger extends CordovaPlugin{
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
         try{
-            // If the decoder instance is null, create it.
-            if (keyboardManager == null) { // Remember an onPause call will set it to null.
-                keyboardManager = new com.datalogic.device.input.KeyboardManager();
-            }
             // From here on, we want to be notified with exceptions in case of errors.
             ErrorManager.enableExceptions(true);
+            // If the keyboardManager instance is null, create it.
+            if (keyboardManager == null) {
+                keyboardManager = new com.datalogic.device.input.KeyboardManager();
+            }
         } 
         catch (Exception e) {
             Log.e(LOGTAG, "Error while initializing KeyboardManager", e);
@@ -223,10 +223,10 @@ public class AutoScanTrigger extends CordovaPlugin{
 
     //sets the current range for Auto Scan
     private boolean setCurrentRange(CallbackContext callbackContext, JSONArray data){
+        boolean successFlag = false;
         try{
             //if the value at index doesn't exist or cannot be coerced to a int.
             int rangeId = data.getInt(0);
-            boolean successFlag = false;
 
             //DeviceException in case of error, when exceptions are enabled through the ErrorManager singleton.
             List<Trigger> triggersList = keyboardManager.getAvailableTriggers();
@@ -285,7 +285,7 @@ public class AutoScanTrigger extends CordovaPlugin{
             return false;
         }
 
-        return true;
+        return successFlag;
     }
 
 
