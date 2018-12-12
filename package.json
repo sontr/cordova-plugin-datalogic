@@ -26,7 +26,7 @@
         "cordova-android"
     ],
     "devDependencies": {
-      "mz": "2.7.0"
+        "mz": "2.7.0"
     },
     "author": "Datalogic",
     "license": "Apache-2",

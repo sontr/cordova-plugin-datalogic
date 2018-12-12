@@ -1,83 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?>
-<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="cordova-plugin-datalogic"
-        version="0.0.0">
-
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" id="cordova-plugin-datalogic" version="0.2.1">
   <name>Datalogic Cordova Plugin</name>
-
   <engines>
     <engine name="cordova" version=">=3.4.0"/>
   </engines>
-
   <asset src="www/barcodeManager.js" target="js/barcodeManager.js"/>
-  <js-module src="www/barcodeManager.js" name="barcodeManager">
-    <clobbers target="barcodeManager" />
-  </js-module>
-
   <asset src="www/scannerProperties.js" target="js/scannerProperties.js"/>
-  <js-module src="www/scannerProperties.js" name="scannerProperties">
-    <clobbers target="scannerProperties" />
-  </js-module>
-
   <asset src="www/keyboardManager.js" target="js/keyboardManager.js"/>
-  <js-module src="www/keyboardManager.js" name="keyboardManager">
-    <clobbers target="keyboardManager" />
-  </js-module>
-
   <asset src="www/autoScanTrigger.js" target="js/autoScanTrigger.js"/>
-  <js-module src="www/autoScanTrigger.js" name="autoScanTrigger">
-    <clobbers target="autoScanTrigger" />
-  </js-module>
-
   <asset src="www/ledManager.js" target="js/ledManager.js"/>
-  <js-module src="www/ledManager.js" name="ledManager">
-    <clobbers target="ledManager" />
+  <js-module src="www/barcodeManager.js" name="barcodeManager">
+    <clobbers target="barcodeManager"/>
   </js-module>
-
+  <js-module src="www/scannerProperties.js" name="scannerProperties">
+    <clobbers target="scannerProperties"/>
+  </js-module>
+  <js-module src="www/keyboardManager.js" name="keyboardManager">
+    <clobbers target="keyboardManager"/>
+  </js-module>
+  <js-module src="www/autoScanTrigger.js" name="autoScanTrigger">
+    <clobbers target="autoScanTrigger"/>
+  </js-module>
+  <js-module src="www/ledManager.js" name="ledManager">
+    <clobbers target="ledManager"/>
+  </js-module>
   <platform name="android">
-
     <config-file target="res/xml/config.xml" parent="/*">
-
       <feature name="BarcodeManager">
         <param name="android-package" value="com.datalogic.cordova.decode.BarcodeManager"/>
-        <param name="onload" value="true" />
+        <param name="onload" value="true"/>
       </feature>
-
       <feature name="ScannerProperties">
         <param name="android-package" value="com.datalogic.cordova.decode.configuration.ScannerProperties"/>
-        <param name="onload" value="false" />
+        <param name="onload" value="false"/>
       </feature>
-
       <feature name="KeyboardManager">
         <param name="android-package" value="com.datalogic.cordova.device.input.KeyboardManager"/>
-        <param name="onload" value="false" />
+        <param name="onload" value="false"/>
       </feature>
-
       <feature name="AutoScanTrigger">
         <param name="android-package" value="com.datalogic.cordova.device.input.AutoScanTrigger"/>
-        <param name="onload" value="false" />
+        <param name="onload" value="false"/>
       </feature>
-
       <feature name="LedManager">
         <param name="android-package" value="com.datalogic.cordova.device.notification.LedManager"/>
-        <param name="onload" value="false" />
+        <param name="onload" value="false"/>
       </feature>
-
     </config-file>
-
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
-      <uses-library android:name="com.datalogic.device" android:required="true" />
+      <uses-library android:name="com.datalogic.device" android:required="true"/>
     </config-file>
-
     <source-file src="src/android/BarcodeManager.java" target-dir="src/com/datalogic/cordova/decode"/>
     <source-file src="src/android/ScannerProperties.java" target-dir="src/com/datalogic/cordova/decode/configuration"/>
-    <source-file src="src/android/KeyboardManager.java" target-dir="src/com/datalogic/cordova/device/input"/> 
+    <source-file src="src/android/KeyboardManager.java" target-dir="src/com/datalogic/cordova/device/input"/>
     <source-file src="src/android/Trigger.java" target-dir="src/com/datalogic/cordova/device/input"/>
     <source-file src="src/android/AutoScanTrigger.java" target-dir="src/com/datalogic/cordova/device/input"/>
     <source-file src="src/android/LedConfig.java" target-dir="src/com/datalogic/cordova/device/notification"/>
     <source-file src="src/android/LedManager.java" target-dir="src/com/datalogic/cordova/device/notification"/>
-
-    <framework src="build.gradle" custom="true" type="gradleReference" />
+    <framework src="build.gradle" custom="true" type="gradleReference"/>
   </platform>
-
 </plugin>
