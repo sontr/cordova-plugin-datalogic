@@ -9,7 +9,7 @@
         ]
     },
     "scripts": {
-        "prepublish": "./scripts/prepublish.sh"
+        "prepare": "./scripts/prepare.sh"
     },
     "repository": {
         "type": "git",
@@ -25,6 +25,9 @@
         "ecosystem:cordova",
         "cordova-android"
     ],
+    "devDependencies": {
+      "mz": "2.7.0"
+    },
     "author": "Datalogic",
     "license": "Apache-2",
     "homepage": "https://github.com/datalogic/cordova-plugin-datalogic"
