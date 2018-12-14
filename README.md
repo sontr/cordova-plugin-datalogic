@@ -318,11 +318,49 @@ Function to set one or more triggers on or off. You will likely call `getAllAvai
 
 `string` with success message
 
+##### Example
+
+```js
+//an array os supported triggers
+triggers:{id: number, name: string, enabled: boolean}[]  = []; 
+...
+keyboardManager.getAllAvailableTriggers(
+  (data) => {
+    this.triggers = JSON.parse(data).triggers;
+    this.triggers[0].enabled = false;
+
+    keyboardManager.setTriggers(
+      this.triggers,
+      (data) => {
+        alert(data);
+    },
+    (err) => {
+      alert(err);
+    });
+  },
+  (err) => {
+    alert(err);
+  });
+```
+
 ### ledManager
 
 ---
 
 #### .setLed(`ledConfig`, `successCallback`, `errorCallback`): Object
+
+Function to set the various device LEDs. A list of enum values for LEDs can be found [here]( https://datalogic.github.io/android-sdk-docs/reference/com/datalogic/device/notification/Led.html).
+
+##### Response
+
+`string` with success message
+
+
+##### Example
+
+```js
+ledManager.setLed({"led": "LED_GOOD_READ", "enable": false}, null, null);
+```
 
 ### scannerProperties
 
@@ -330,4 +368,78 @@ Function to set one or more triggers on or off. You will likely call `getAllAvai
 
 #### .edit(`successCallback`, `errorCallback`): Object
 
+Get a list of supported symbologies along with the state of each (enabled or disabled).
+
+##### Response
+
+A single JSON object containing an object for each of the available symbologies. Each symbology contains, at a minimum, these fields:
+
+* `enable` : `boolean` - if scannner is set to detect this barcode type or not
+* `supported` : `boolean` - if the scanner supports the given barcode type or not
+
+```json
+{
+  "aztec":{"enable":true,"supported":true},
+  "codabar":{"enable":true,"supported":true},
+  "code128":{"enable":true,"supported":true},
+  "code39":{"enable":true,"supported":true},
+  "code93":{"enable":false,"supported":true},
+  "composite":{"enable":false,"supported":true},
+  "datamatrix":{"enable":true,"supported":true},
+  "digimarc":{"enable":false,"supported":false},
+  "discrete25":{"enable":false,"supported":true},
+  "ean13":{"enable":true,"supported":true},
+  "ean8":{"enable":true,"supported":true},
+  "gs1DataBar_14":{"enable":true,"supported":true},
+  "gs1DataBar_Expanded":{"enable":true,"supported":true},
+  "gs1DataBar_Limited":{"enable":true,"supported":true},
+  "interleaved25":{"enable":true,"supported":true},
+  "matrix25":{"enable":false,"supported":true},
+  "maxicode":{"enable":false,"supported":true},
+  "microQr":{"enable":false,"supported":true},
+  "micropdf417":{"enable":false,"supported":true},
+  "msi":{"enable":false,"supported":true},
+  "p4State":{"enable":false,"supported":true},
+  "pAus":{"enable":false,"supported":true},
+  "pJap":{"enable":false,"supported":true},
+  "pKix":{"enable":false,"supported":true},
+  "pPlanet":{"enable":false,"supported":true},
+  "pPostnet":{"enable":false,"supported":true},
+  "pRM":{"enable":false,"supported":true},
+  "pdf417":{"enable":true,"supported":true},
+  "qrCode":{"enable":true,"supported":true},
+  "upcA":{"enable":true,"supported":true},
+  "upcE":{"enable":true,"supported":true}
+}
+```
+
+##### Example
+
+```js
+symbologies : any = {};
+...
+scannerProperties.edit(
+  (data) => {
+    this.symbologies =  JSON.parse(data);
+    this.aztec = false;
+    this.codabar = false;
+    this.code128 = true;
+  },
+  (err) => {
+    alert(err);
+  });
+```
+
 #### .store(`properties`, `successCallback`, `errorCallback`): Object
+
+Apply changes to one or more symbologies with the values supplied in `properties`.
+
+##### Response
+
+`string` with success message
+
+##### Example
+
+```js
+scannerProperties.store({"upcE":{"enable":true,"supported":true}}, null, null);
+```
