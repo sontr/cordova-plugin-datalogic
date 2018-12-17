@@ -34,13 +34,27 @@ All functions are asynchronous. All functions will, at a minimum, include `succe
 
 * `errorCallback` will be called when there was an error, and will return a single error `string`.
 
+| Function | Description
+|----------|------------
+| [barcodeManager.addReadListener](#addreadlistenersuccesscallback-errorcallback-object) | Register to recieve barcode data on each scan.
+| [autoScanTrigger.isAvailable](#isavailablesuccesscallback-errorcallback-object) | Determine if the auto scan feature is available on this device.
+| [autoScanTrigger.getSupportedRanges](#getsupportedrangessuccesscallback-errorcallback-object) | Get the supported ranges of the autoscan feature.
+| [autoScanTrigger.getCurrentRange](#getcurrentrangesuccesscallback-errorcallback-object) | Get the current range of the autoscan feature.
+| [autoScanTrigger.setCurrentRange](#setcurrentrangeid-successcallback-errorcallback-object) | Set the current range of the autoscan feature.
+| [keyboardManager.getAllAvailableTriggers](#getallavailabletriggers-successcallback-errorcallback-object) | Get all the available triggers of the device.
+| [keyboardManager.setAllAvailableTriggers](#setallavailabletriggersenable-successcallback-errorcallback-object) | Set all the devices triggers on or off.
+| [keyboardManager.setTriggers](#settriggersconfig-successcallback-errorcallback-object) | Set one or more triggers on or off.
+| [ledManager.setLed](#setledledconfig-successcallback-errorcallback-object) | Set various device LEDs.
+| [scannerProperties.edit](#editsuccesscallback-errorcallback-object) | Get a list of supported symbologies along with the state of each (enabled or disabled).
+| [scannerProperties.store](#storeproperties-successcallback-errorcallback-object) | Apply changes to one or more symbologies with the values supplied in properties.
+
 ### barcodeManager
 
 ---
 
 #### .addReadListener(`successCallback`, `errorCallback`): Object
 
-`successCallback` will be called ***every time*** a barcode is successfully scanned. Therefore, you will typically only need to call `barcodeManager.addReadListener()` *once* in your application.
+Register to recieve barcode data on each scan. `successCallback` will be called ***every time*** a barcode is successfully scanned. Therefore, you will typically only need to call `barcodeManager.addReadListener()` *once* in your application.
 
 ##### Response
 
@@ -76,7 +90,7 @@ barcodeManager.addReadListner(
 
 #### .isAvailable(`successCallback`, `errorCallback`): Object
 
-Function to determine if the auto scan feature is available on this device.
+Determine if the auto scan feature is available on this device.
 
 ##### Response
 
@@ -108,7 +122,7 @@ autoScanTrigger.isAvailable(
 
 #### .getSupportedRanges(`successCallback`, `errorCallback`): Object
 
-Function to get the supported ranges of the autoscan feature.
+Get the supported ranges of the autoscan feature.
 
 ##### Response
 
@@ -163,7 +177,7 @@ autoScanTrigger.getSupportedRanges(
 
 #### .getCurrentRange(`successCallback`, `errorCallback`): Object
 
-Function to get the current range of the autoscan feature.
+Get the current range of the autoscan feature.
 
 ##### Response
 
@@ -207,7 +221,7 @@ autoScanTrigger.getCurrentRange(
 
 #### .setCurrentRange(`id`, `successCallback`, `errorCallback`): Object
 
-Function to set the current range of the autoscan feature.
+Set the current range of the autoscan feature.
 
 `id` : `integer` - should match one of the `id` values retrevied by the getSupportedRanges function.
 
@@ -236,7 +250,7 @@ autoScanTrigger.setCurrentRange(
 
 #### .getAllAvailableTriggers (`successCallback`, `errorCallback`): Object
 
-Function to get all the available triggers of the device.
+Get all the available triggers of the device.
 
 ##### Response
 
@@ -284,7 +298,7 @@ keyboardManager.getAllAvailableTriggers(
 
 #### .setAllAvailableTriggers(`enable`, `successCallback`, `errorCallback`): Object
 
-Function to set all the devices triggers on or off.
+Set all the devices triggers on or off.
 
 ##### Response
 
@@ -307,7 +321,7 @@ keyboardManager.setAllAvailableTriggers(
 
 #### .setTriggers(`config`, `successCallback`, `errorCallback`): Object
 
-Function to set one or more triggers on or off. You will likely call `getAllAvailableTriggers`, edit the `enabled` flags of each returned object as desired, and then resubmit by calling `setTriggers`.
+Set one or more triggers on or off. You will likely call `getAllAvailableTriggers`, edit the `enabled` flags of each returned object as desired, and then resubmit by calling `setTriggers`.
 
 `config` : `array` - each ojbect in the array represents an individual trigger. Each object in the array contains:
 
@@ -349,7 +363,7 @@ keyboardManager.getAllAvailableTriggers(
 
 #### .setLed(`ledConfig`, `successCallback`, `errorCallback`): Object
 
-Function to set the various device LEDs. A list of enum values for LEDs can be found [here]( https://datalogic.github.io/android-sdk-docs/reference/com/datalogic/device/notification/Led.html).
+Set the various device LEDs. A list of enum values for LEDs can be found [here]( https://datalogic.github.io/android-sdk-docs/reference/com/datalogic/device/notification/Led.html).
 
 ##### Response
 
