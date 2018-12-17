@@ -34,19 +34,15 @@ All functions are asynchronous. All functions will, at a minimum, include `succe
 
 * `errorCallback` will be called when there was an error, and will return a single error `string`.
 
-| Function | Description
-|----------|------------
-| [barcodeManager.addReadListener](#addreadlistenersuccesscallback-errorcallback-object) | Register to recieve barcode data on each scan.
-| [autoScanTrigger.isAvailable](#isavailablesuccesscallback-errorcallback-object) | Determine if the auto scan feature is available on this device.
-| [autoScanTrigger.getSupportedRanges](#getsupportedrangessuccesscallback-errorcallback-object) | Get the supported ranges of the autoscan feature.
-| [autoScanTrigger.getCurrentRange](#getcurrentrangesuccesscallback-errorcallback-object) | Get the current range of the autoscan feature.
-| [autoScanTrigger.setCurrentRange](#setcurrentrangeid-successcallback-errorcallback-object) | Set the current range of the autoscan feature.
-| [keyboardManager.getAllAvailableTriggers](#getallavailabletriggers-successcallback-errorcallback-object) | Get all the available triggers of the device.
-| [keyboardManager.setAllAvailableTriggers](#setallavailabletriggersenable-successcallback-errorcallback-object) | Set all the devices triggers on or off.
-| [keyboardManager.setTriggers](#settriggersconfig-successcallback-errorcallback-object) | Set one or more triggers on or off.
-| [ledManager.setLed](#setledledconfig-successcallback-errorcallback-object) | Set various device LEDs.
-| [scannerProperties.edit](#editsuccesscallback-errorcallback-object) | Get a list of supported symbologies along with the state of each (enabled or disabled).
-| [scannerProperties.store](#storeproperties-successcallback-errorcallback-object) | Apply changes to one or more symbologies with the values supplied in properties.
+### Namespaces
+
+| Namespace | Description
+|-----------|------------
+| [barcodeManager](#barcodeManager) | receive barcode data
+| [autoScanTrigger](#autoScanTrigger) | work the the autoscan features
+| [keyboardManager](#keyboardManager) | set usable device triggers
+| [ledManager](#ledManager) | control device LEDs
+| [scannerProperties](#scannerProperties) | define availabled symbologies
 
 ### barcodeManager
 
@@ -82,9 +78,7 @@ barcodeManager.addReadListner(
      parsedData = JSON.parse(data);
      alert(parsedData.barcodeData + ", " + parsedData.barcodeType);
    },
-   (err)=>{
-     alert(err);
-   }
+   (err)=>{ alert(err); }
 );
 ```
 
@@ -109,9 +103,7 @@ Determine if the auto scan feature is available on this device.
 * `available` : `boolean` - indicates if autoscan is supported or not on this device.
 
 ```json
-{
-   "available": true
-}
+{ "available": true }
 ```
 
 ##### Example
@@ -125,11 +117,8 @@ autoScanTrigger.isAvailable(
     this.isAvailable = JSON.parse(data).available;
     alert(this.isAvailable);
   },
-  (err) => {
-    alert(err);
-  }
+  (err) => { alert(err); }
 );
-
 ```
 
 #### .getSupportedRanges(`successCallback`, `errorCallback`): Object
@@ -146,9 +135,7 @@ Get the supported ranges of the autoscan feature.
 If AutoScan is not supported by device:
 
 ```json
-{
-  "supportedRanges":[]
-}
+{ "supportedRanges":[] }
 ```
 
 If AutoScan is supported:
@@ -182,9 +169,8 @@ autoScanTrigger.getSupportedRanges(
     if(this.supportedRanges.length == 0)
       alert("Device does not support Auto Scan");
   },
-  (err) => {
-    alert(err);
-  });
+  (err) => { alert(err); }
+);
 ```
 
 #### .getCurrentRange(`successCallback`, `errorCallback`): Object
@@ -201,9 +187,7 @@ Get the current range of the autoscan feature.
 If AutoScan is not supported by device:
 
 ```json
-{
-  "currentRange":null
-}
+{ "currentRange":null }
 ```
 
 If AutoScan is supported:
@@ -226,9 +210,8 @@ autoScanTrigger.getCurrentRange(
   (data) => {
     alert(JSON.parse(data).currentRange);
   },
-  (err) => {
-    alert(err);
-  });
+  (err) => { alert(err); }
+);
 ```
 
 #### .setCurrentRange(`id`, `successCallback`, `errorCallback`): Object
@@ -248,12 +231,9 @@ Set current range to "Intermediate"
 ```js
 autoScanTrigger.setCurrentRange(
   0,
-  (data) => {
-    alert(data);
-  },
-  (err) => {
-    alert(err);
-  });
+  (data) => { alert(data); },
+  (err) => { alert(err); }
+);
 ```
 
 ### keyboardManager
@@ -306,12 +286,9 @@ Typical resopsnse:
 
 ```js
 keyboardManager.getAllAvailableTriggers(
-  (data) => {
-    alert(JSON.parse(data).triggers);
-  },
-  (err) => {
-    alert(err);
-  });
+  (data) => { alert(JSON.parse(data).triggers); },
+  (err) => { alert(err); }
+);
 ```
 
 #### .setAllAvailableTriggers(`enable`, `successCallback`, `errorCallback`): Object
@@ -329,12 +306,9 @@ Turn all triggers on.
 ```js
 keyboardManager.setAllAvailableTriggers(
   true,
-  (data) => {
-    alert(data);
-  },
-  (err) => {
-    alert(err);
-  });
+  (data) => { alert(data); },
+  (err) => { alert(err); }
+);
 ```
 
 #### .setTriggers(`config`, `successCallback`, `errorCallback`): Object
@@ -363,16 +337,12 @@ keyboardManager.getAllAvailableTriggers(
 
     keyboardManager.setTriggers(
       this.triggers,
-      (data) => {
-        alert(data);
-    },
-    (err) => {
-      alert(err);
-    });
+      (data) => { alert(data); },
+      (err) => { alert(err);}
+    );
   },
-  (err) => {
-    alert(err);
-  });
+  (err) => { alert(err); }
+);
 ```
 
 ### ledManager
@@ -466,9 +436,8 @@ scannerProperties.edit(
     this.codabar = false;
     this.code128 = true;
   },
-  (err) => {
-    alert(err);
-  });
+  (err) => { alert(err); }
+);
 ```
 
 #### .store(`properties`, `successCallback`, `errorCallback`): Object
