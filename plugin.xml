@@ -48,7 +48,7 @@
       </feature>
     </config-file>
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
-      <uses-library android:name="com.datalogic.device" android:required="true"/>
+      <uses-library android:name="com.datalogic.device" android:required="false"/>
     </config-file>
     <source-file src="src/android/BarcodeManager.java" target-dir="src/com/datalogic/cordova/decode"/>
     <source-file src="src/android/ScannerProperties.java" target-dir="src/com/datalogic/cordova/decode/configuration"/>
