@@ -8,9 +8,6 @@
             "android"
         ]
     },
-    "scripts": {
-        "prepare": "./scripts/prepare.sh"
-    },
     "repository": {
         "type": "git",
         "url": "https://github.com/datalogic/cordova-plugin-datalogic"
