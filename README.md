@@ -374,12 +374,12 @@ ledManager.setLed({"led": "LED_GOOD_READ", "enable": false}, null, null);
 
 | Function | Description
 |----------|------------
-| [edit](#editsuccesscallback-errorcallback-object) | Get a list of supported symbologies along with the state of each (enabled or disabled).
-| [store](#storeproperties-successcallback-errorcallback-object) | Apply changes to one or more symbologies with the values supplied in properties.
+| [edit](#editsuccesscallback-errorcallback-object) | Get a list of supported properties along with the state of each (enabled or disabled).
+| [store](#storeproperties-successcallback-errorcallback-object) | Apply changes to one or more properties with the values supplied.
 
 #### .edit(`successCallback`, `errorCallback`): Object
 
-Get a list of supported symbologies along with the state of each (enabled or disabled).
+Get a list of supported scanner properties along with the state of each (enabled or disabled).
 
 ##### Response
 
@@ -390,6 +390,7 @@ A single JSON object containing an object for each of the available symbologies.
 
 ```json
 {
+  "keyboardWedge":{"enable":true,"supported":true},
   "aztec":{"enable":true,"supported":true},
   "codabar":{"enable":true,"supported":true},
   "code128":{"enable":true,"supported":true},
@@ -427,14 +428,15 @@ A single JSON object containing an object for each of the available symbologies.
 ##### Example
 
 ```js
-symbologies : any = {};
+properties : any = {};
 ...
 scannerProperties.edit(
   (data) => {
-    this.symbologies =  JSON.parse(data);
+    this.properties =  JSON.parse(data);
     this.aztec = false;
     this.codabar = false;
     this.code128 = true;
+    this.keyboardWedge = false;
   },
   (err) => { alert(err); }
 );
@@ -448,8 +450,16 @@ Apply changes to one or more symbologies with the values supplied in `properties
 
 `string` with success message
 
-##### Example
+##### Examples
+
+Enable UPC-E symbology
 
 ```js
 scannerProperties.store({"upcE":{"enable":true,"supported":true}}, null, null);
+```
+
+Disable keyboard wedge feature
+
+```js
+scannerProperties.store({"keyboardWedge":{"enable":false}}, null, null);
 ```
