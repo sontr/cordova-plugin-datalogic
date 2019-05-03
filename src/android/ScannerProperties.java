@@ -41,7 +41,7 @@ import java.nio.charset.StandardCharsets;
 
 public class ScannerProperties extends CordovaPlugin{
 
-    private final String LOGTAG = "CODY";
+    private final String LOGTAG = "ScannerProperties";
 
 	@Override
     public boolean execute(String action, JSONArray data, CallbackContext context) throws JSONException 
@@ -70,6 +70,8 @@ public class ScannerProperties extends CordovaPlugin{
 
         try 
         {
+            cfg.put("keyboardWedge", (new JSONObject()).put("enable", sp.keyboardWedge.enable.get()).put("supported", sp.keyboardWedge.isSupported()));
+
             cfg.put("aztec", (new JSONObject()).put("enable", sp.aztec.enable.get()).put("supported", sp.aztec.isSupported()));
             cfg.put("codabar", (new JSONObject()).put("enable", sp.codabar.enable.get()).put("supported", sp.codabar.isSupported()));
             cfg.put("code128", (new JSONObject()).put("enable", sp.code128.enable.get()).put("supported", sp.code128.isSupported()));
@@ -127,6 +129,8 @@ public class ScannerProperties extends CordovaPlugin{
             all = data.getJSONObject(0);
             //Log.d(LOGTAG, "store: " + all.toString());
 
+            propSetEnable(cfg.keyboardWedge, cfg.keyboardWedge.enable, all, "keyboardWedge");
+
             // note: digimarc and dotcote are not supported on Memor 10
             propSetEnable(cfg.aztec, cfg.aztec.enable, all, "aztec");
             propSetEnable(cfg.codabar, cfg.codabar.enable, all, "codabar");
@@ -173,7 +177,6 @@ public class ScannerProperties extends CordovaPlugin{
         // format
         // goodread
         // intentWedge
-        // keyboardWedge
         // linearQZ
         // multiScan
         // scannerOptions
