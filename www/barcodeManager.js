@@ -9,4 +9,8 @@ barcodeManager.addReadListner = function (successCallback, errorCallback) {
     
 };
 
+barcodeManager.startDecode = function (successCallback, errorCallback) {
+    exec(successCallback, errorCallback, 'BarcodeManager', 'startDecode', []);
+};
+
 module.exports = barcodeManager;

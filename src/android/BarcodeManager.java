@@ -42,7 +42,11 @@ public class BarcodeManager extends CordovaPlugin {
             //     callbackContext.sendPluginResult(result);    
             // }
             return true;
-
+        } else if (action.equals("startDecode")) {
+            decoder.startDecode();
+            context.success();
+            
+            return true;
         } else {
             
             return false;
